@@ -138,9 +138,11 @@ class BTCPSocket:
         """
         logger.debug("unpack_segment_header() called")
 
-        (seq_num, ack_num, flags, window, btcp_length,
-         checksum) = struct.unpack_from("!HHBBHH", header)
-        return seq_num, ack_num, flags, window, btcp_length, checksum
+        (seq_num, ack_num, flags, window, btcp_length, checksum) = struct.unpack_from("!HHBBHH", header) 
+        fin_set = flags % 2
+        ack_set = (flags >> 1) % 2
+        syn_set = (flags >> 2) % 2
+        return seq_num, ack_num, syn_set, ack_set, fin_set, window, btcp_length, checksum
     
         #raise NotImplementedError("No implementation of unpack_segment_header present. Read the comments & code of btcp_socket.py. You should really implement the packing / unpacking of the header into field values before doing anything else!")
         logger.debug("unpack_segment_header() done")
