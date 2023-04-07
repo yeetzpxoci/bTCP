@@ -139,6 +139,7 @@ class BTCPSocket:
         logger.debug("unpack_segment_header() called")
 
         (seq_num, ack_num, flags, window, btcp_length, checksum) = struct.unpack_from("!HHBBHH", header) 
+        
         fin_set = flags % 2
         ack_set = (flags >> 1) % 2
         syn_set = (flags >> 2) % 2
